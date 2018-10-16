@@ -1,4 +1,4 @@
 module.exports = {
-    TV: require("./book")
+    TV: require("./tv")
   };
   
