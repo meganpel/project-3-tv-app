@@ -12,12 +12,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "react": "^16.5.2",
-    "react-dom": "^16.5.2",
-    "react-scripts": "2.0.4",
-    "prop-types": "^15.6.2",
     "axios": "^0.18.0",
+    "bootstrap": "^4.1.3",
     "moment": "^2.22.2",
-    "react-datepicker": "^1.6.0"
+    "prop-types": "^15.6.2",
+    "react": "^16.5.2",
+    "react-datepicker": "^1.6.0",
+    "react-dom": "^16.5.2",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "2.0.4",
+    "reactstrap": "^6.5.0"
   }
 }

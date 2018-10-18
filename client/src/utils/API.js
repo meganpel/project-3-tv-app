@@ -1,5 +1,5 @@
 import axios from "axios";
-const movieKey = require("key.js");
+const movieKey = require("./key.js");
 const BASEURL = "https://api.themoviedb.org/3/search/tv";
  
 

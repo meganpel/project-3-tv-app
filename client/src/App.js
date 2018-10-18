@@ -1,26 +1,55 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
+
+import Login from "./Components/Login"
+import Profile from "./pages/Profile";
 
 class App extends Component {
+  state = {
+    loggedIn: false,
+    showLoginModal: false,
+    userEmail: "",
+  };
+
+  renderMenuLogin() {
+    if (this.state.loggedIn) {
+      return (
+        <li className="nav-item">
+          <a className="nav-link" href="#">Logout</a>
+        </li>
+      );
+    }
+
+    return (
+      <li className="nav-item">
+        <a className="nav-link" href="#" onClick={() => this.setState({showLoginModal: true})}>Login</a>
+      </li>
+    );
+  }
+
+  hideLoginModal() {
+    this.setState({showLoginModal: false})
+  }
+
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+        <Router>
+          <div>
+            <ul className="nav justify-content-end">
+              <li className="nav-item">
+                <NavLink to="/" exact className="nav-link" activeClassName="nav-link-active">Search</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink to="/profile" exact className="nav-link" activeClassName="nav-link-active">My Profile</NavLink>
+              </li>
+              {this.renderMenuLogin()}
+            </ul>
+            <Login showLoginModal={this.state.showLoginModal} hideLoginModal={this.hideLoginModal.bind(this)} />
+            <Route exact path="/profile" component={Profile} />
+          </div>
+        </Router>
     );
   }
 }
