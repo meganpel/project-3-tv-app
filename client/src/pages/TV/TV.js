@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
 import { Link } from "react-router-dom";
-import { Col, Row, Container } from "../../components/Grid";
-import { List, ListItem } from "../../components/List";
-import { Input, TextArea, Button } from "../../components/Form";
+import { Col, Row, Container } from "../../Components/Grid";
+import { List, ListItem } from "../../Components/List";
+import { Input, TextArea, Button } from "../../Components/Form";
 
 
 class TV extends Component {

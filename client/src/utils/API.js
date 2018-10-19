@@ -1,12 +1,34 @@
 import axios from "axios";
-const movieKey = require("./key.js");
-const BASEURL = "https://api.themoviedb.org/3/search/tv";
- 
+// let term;
+
+const URL = process.env.REACT_APP_DB_URL;
+const URL2 = process.env.REACT_APP_DB_URL_2;
+const request = {
+    method: 'GET',
+    headers: {
+      'X-Mashape-Key': process.env.REACT_APP_API_KEY,
+      Accept: 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded'
+    }
+  }
 
 export default {
-  search: function(search) {
-    return axios.get(BASEURL + "?api_key=" + movieKey  + "&query=" + search);
+  Find: function(term) {
+    return axios(URL + term, request)
+  },
+    search: function(search) {
+      return axios.get(URL2 + "?api_key=" + process.env.REACT_APP_API_KEY_2  + "&query=" + search);
+    }
+    
+  ,
+  UserData: function() {
+    return axios.get("/api/new");
+  },
+  Saved: function(data) {
+    return axios.post("/api/new", data);
+  },
+  Deleted: function(id) {
+    return axios.delete("/api/new/" + id);
   }
+
 };
-
-
