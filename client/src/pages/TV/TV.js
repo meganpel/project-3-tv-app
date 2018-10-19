@@ -10,12 +10,27 @@ class TV extends Component {
   state = {
     shows: [],
     searchResults: [],
+    results: [],
     term: "",
   };
 
   componentDidMount() {
     this.showCollect();
+    // this.searchSimilar();
   }
+
+// searchSimilar = () => {
+//   const search = this.state.search
+//   API.search(search)
+//     .then(res => {
+//       var answer = res;
+//       this.setState({
+//         results: answer.data.results
+//       });
+//       console.log(this.state);
+//     }).catch(err => console.log(err));
+// };
+
 
   showCollect = () => {
     API.UserData()
@@ -46,6 +61,14 @@ class TV extends Component {
         }
       )
       .catch(err => console.log(err));
+
+      API.search(this.state.term)
+      .then(res =>
+        {this.setState({
+          results: res.data.results
+        });
+      }
+    )
   }
 };
 
@@ -76,6 +99,20 @@ class TV extends Component {
        </strong>
        <br/>
        <img src={this.state.searchResults.picture} width='200' height='100'/>
+
+
+       {this.state.results.map(result => (
+
+<div className="container">
+  <ul className="list-group">
+    <li>Name: {result.name}</li>
+    <li>Poster Link: {result.poster_path}</li>
+    <li> Key: {result.id}</li>
+    <li>overview: {result.overview}</li>
+  </ul>
+</div>
+
+))}
      {/* <Col size="col-centered">
            
           {this.state.searchResults.length ? (

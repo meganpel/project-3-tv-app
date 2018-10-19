@@ -16,10 +16,9 @@ export default {
   Find: function(term) {
     return axios(URL + term, request)
   },
-    search: function(search) {
-      return axios.get(URL2 + "?api_key=" + process.env.REACT_APP_API_KEY_2  + "&query=" + search);
+    search: function(term) {
+      return axios.get(URL2 + "?api_key=" + process.env.REACT_APP_API_KEY_2  + "&query=" + term);
     }
-    
   ,
   UserData: function() {
     return axios.get("/api/new");
