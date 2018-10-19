@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, NavLink } from 'react-router-dom';
 
 import Login from "./Components/Login"
 import Profile from "./pages/Profile";
+import TV from "./pages/TV";
 
 class App extends Component {
   state = {
@@ -36,6 +37,8 @@ class App extends Component {
   render() {
     return (
         <Router>
+           <Switch>
+          
           <div>
             <ul className="nav justify-content-end">
               <li className="nav-item">
@@ -47,8 +50,10 @@ class App extends Component {
               {this.renderMenuLogin()}
             </ul>
             <Login showLoginModal={this.state.showLoginModal} hideLoginModal={this.hideLoginModal.bind(this)} />
-            <Route exact path="/profile" component={Profile} />
+             <Route exact path="/" component={TV} />
+             <Route exact path="/profile" component={Profile} />
           </div>
+          </Switch>
         </Router>
     );
   }
