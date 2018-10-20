@@ -1,5 +1,4 @@
 import axios from "axios";
-// let term;
 
 const URL = process.env.REACT_APP_DB_URL;
 const URL2 = process.env.REACT_APP_DB_URL_2;
