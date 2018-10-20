@@ -5,32 +5,24 @@ import ResultList from "../../Components/ResultList"
 import { Col, Row, Container } from "../../Components/Grid";
 import { List, ListItem } from "../../Components/List";
 import { Input, TextArea, Button } from "../../Components/Form";
-
+import SimButton from "../../Components/SimButton";
 
 class TV extends Component {
   state = {
     shows: [],
     searchResults: [],
     results: [],
+    simResults: [],
     term: "",
   };
 
   componentDidMount() {
     this.showCollect();
-    // this.searchSimilar();
   }
-
-// searchSimilar = () => {
-//   const search = this.state.search
-//   API.search(search)
-//     .then(res => {
-//       var answer = res;
-//       this.setState({
-//         results: answer.data.results
-//       });
-//       console.log(this.state);
-//     }).catch(err => console.log(err));
-// };
+  handleBtnClick = event => {
+    const value = event.target.value;
+    this.searchSimilar(value);
+  }
 
 
   showCollect = () => {
@@ -47,6 +39,17 @@ class TV extends Component {
     this.setState({
       [name]: value
     });
+  };
+
+  searchSimilar = (value) => {
+    API.similar(value)
+      .then(res => {
+        var answer = res;
+        this.setState({
+          simResults: answer.data.results
+        });
+        console.log(this.state);
+      }).catch(err => console.log(err));
   };
 
   handleFormSubmit = event => {
@@ -102,10 +105,22 @@ class TV extends Component {
           {this.state.searchResults.map(shows=>(
               <div>
                     {shows.name}
-              
-          
+                  <img src={shows.picture} width='200' height='100'/>
+
+              {shows.locations.map(showLocation=>(
+                     <div>
+                     {showLocation.display_name}
+                    </div> 
+             ))} 
                       </div>
-            ))}   </strong>
+                      
+            ))
+            
+            
+            }   </strong>
+
+         
+           
        {/* {this.state.searchResults.name}
     
        <br/>
@@ -120,12 +135,36 @@ class TV extends Component {
     <li>Poster Link: {result.poster_path}</li>
     <li> Key: {result.id}</li>
     <li>overview: {result.overview}</li>
+    <SimButton value={result.id} name="id" onClick={this.handleBtnClick}>Find Similar Titles</SimButton>
   </ul>
   <br/>
 </div>
 
 ))}
 </ResultList>
+
+ <Col size="md-4">
+            <ResultList>
+              <div className="col-md">
+                {this.state.simResults.map(result2 => (
+
+                  <div className="container"
+                  
+                   >
+                    <ul className="list-group">
+                      <li>Name: {result2.name} key= {result2.id}</li>
+                      <li><img src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2` + `${result2.poster_path}`}  width='200' height='100'/> </li>
+                      <li> Key: {result2.id}</li>
+                      <li>overview: {result2.overview}</li>
+
+                    </ul>
+                  </div>
+                ))}
+
+              </div>
+            </ResultList>
+
+          </Col>
      {/* <Col size="col-centered">
            
           {this.state.searchResults.length ? (
