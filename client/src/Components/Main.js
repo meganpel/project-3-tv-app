@@ -83,10 +83,10 @@ class Main extends Component {
             <ResultList>
               {this.state.results.map(result => (
 
-                <div className="container">
+                <div className="container"  key={result.id} >
                   <ul className="list-group">
                     <li>Name: {result.name}</li>
-                    <li><a href={`https://image.tmdb.org/t/p/w600_and_h900_bestv2` + `${result.poster_path}`}>Poster Link: Click Here</a></li>
+                    <li><a href={`https://image.tmdb.org/t/p/w600_and_h900_bestv2` + `${result.poster_path}`} target="_blank" rel="noopener noreferrer" >Poster Link: Click Here</a></li>
                     <li> Key: {result.id}</li>
                     <li>overview: {result.overview}</li>
                     <SimButton value={result.id} name="id" onClick={this.handleBtnClick}>Find Similar Titles</SimButton>
@@ -102,10 +102,12 @@ class Main extends Component {
               <div className="col-md">
                 {this.state.results2.map(result2 => (
 
-                  <div className="container">
+                  <div className="container"
+                  
+                   >
                     <ul className="list-group">
-                      <li>Name: {result2.name}</li>
-                      <li><a href={`https://image.tmdb.org/t/p/w600_and_h900_bestv2` + `${result2.poster_path}`}>Poster Link: Click Here</a></li>
+                      <li>Name: {result2.name} key= {result2.id}</li>
+                      <li><a href={`https://image.tmdb.org/t/p/w600_and_h900_bestv2` + `${result2.poster_path}`} target="_blank" rel="noopener noreferrer">Poster Link: Click Here</a></li>
                       <li> Key: {result2.id}</li>
                       <li>overview: {result2.overview}</li>
 
