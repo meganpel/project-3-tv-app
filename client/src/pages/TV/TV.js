@@ -1,21 +1,37 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
 import { Link } from "react-router-dom";
-import { Col, Row, Container } from "../../components/Grid";
-import { List, ListItem } from "../../components/List";
-import { Input, TextArea, Button } from "../../components/Form";
+import ResultList from "../../Components/ResultList"
+import { Col, Row, Container } from "../../Components/Grid";
+import { List, ListItem } from "../../Components/List";
+import { Input, TextArea, Button } from "../../Components/Form";
 
 
 class TV extends Component {
   state = {
     shows: [],
     searchResults: [],
+    results: [],
     term: "",
   };
 
   componentDidMount() {
     this.showCollect();
+    // this.searchSimilar();
   }
+
+// searchSimilar = () => {
+//   const search = this.state.search
+//   API.search(search)
+//     .then(res => {
+//       var answer = res;
+//       this.setState({
+//         results: answer.data.results
+//       });
+//       console.log(this.state);
+//     }).catch(err => console.log(err));
+// };
+
 
   showCollect = () => {
     API.UserData()
@@ -39,15 +55,26 @@ class TV extends Component {
       API.Find(this.state.term)
       .then(res =>
         {this.setState({
-          searchResults: res.data.results[0],
+          searchResults: res.data.results,
           term: ""
         });
     
         }
       )
       .catch(err => console.log(err));
+  
+      API.search(this.state.term)
+      .then(res =>
+        {this.setState({
+          results: res.data.results,
+          term: ""
+        });
+      }
+    )
   }
 };
+
+
 
   render() {
     return (
@@ -72,10 +99,33 @@ class TV extends Component {
             </form></Col>
      <br/>
      <strong>
-       {this.state.searchResults.name}
-       </strong>
+          {this.state.searchResults.map(shows=>(
+              <div>
+                    {shows.name}
+              
+          
+                      </div>
+            ))}   </strong>
+       {/* {this.state.searchResults.name}
+    
        <br/>
-       <img src={this.state.searchResults.picture} width='200' height='100'/>
+       <img src={this.state.searchResults.picture} width='200' height='100'/> */}
+
+<ResultList>
+       {this.state.results.map(result => (
+
+<div className="container">
+  <ul className="list-group">
+    <li>Name: {result.name}</li>
+    <li>Poster Link: {result.poster_path}</li>
+    <li> Key: {result.id}</li>
+    <li>overview: {result.overview}</li>
+  </ul>
+  <br/>
+</div>
+
+))}
+</ResultList>
      {/* <Col size="col-centered">
            
           {this.state.searchResults.length ? (

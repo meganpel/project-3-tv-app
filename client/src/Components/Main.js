@@ -4,7 +4,11 @@ import Row from "./Row";
 import Col from "./Col";
 import Card from "./Card";
 // import Results from "./Results";
+<<<<<<< HEAD
 import ResultList from "./ResultList";
+=======
+// import ResultList from "./ResultList"
+>>>>>>> 991337111ba7a9aa1448285379231153bb5006ea
 import SearchForm from "./SearchForm";
 import SimButton from "./SimButton2";
 
@@ -68,6 +72,7 @@ class Main extends Component {
 
       <Container>
         <Row>
+<<<<<<< HEAD
           <Col size="md-4">
             <Card heading="Tell us your favorite show">
               <SearchForm
@@ -81,6 +86,10 @@ class Main extends Component {
         <Row>
           <div className="col-md">
             <ResultList>
+=======
+          {/* <div>
+            <ResultList> */}
+>>>>>>> 991337111ba7a9aa1448285379231153bb5006ea
               {this.state.results.map(result => (
 
                 <div className="container"  key={result.id} >
@@ -93,8 +102,14 @@ class Main extends Component {
                   </ul>
                 </div>
               ))}
+<<<<<<< HEAD
             </ResultList>
           </div>
+=======
+            {/* </ResultList>
+
+          </div> */}
+>>>>>>> 991337111ba7a9aa1448285379231153bb5006ea
 
 
           <Col size="md-4">
