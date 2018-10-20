@@ -46,7 +46,8 @@ class TV extends Component {
       .then(res => {
         var answer = res;
         this.setState({
-          simResults: answer.data.results
+          simResults: answer.data.results,
+          term: "",
         });
         console.log(this.state);
       }).catch(err => console.log(err));
@@ -59,6 +60,7 @@ class TV extends Component {
       .then(res =>
         {this.setState({
           searchResults: res.data.results,
+          simResults:[],
           term: ""
         });
     
