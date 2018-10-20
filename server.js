@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+var expressSession = require("express-session");
 const db = require("./models");
 
 const app = express();
@@ -9,8 +10,16 @@ require('dotenv').config();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(expressSession({ secret: "secret-token", cookie: { maxAge: 31536000000 } }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+app.use(function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', '*');
+  next();
+});
+
 
 require("./routes/ApiRoutes")(app);
 

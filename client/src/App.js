@@ -14,11 +14,50 @@ class App extends Component {
     userEmail: "",
   };
 
+  setLoggedIn(email) {
+    this.setState({loggedIn: true, userEmail: email});
+  }
+
+  setLoggedOut() {
+    this.setState({loggedIn: false, userEmail: ""});
+  }
+
+  pressLogout() {
+    fetch("http://localhost:3001/logout", {
+      method: 'POST',
+      headers: new Headers({'Content-Type': 'application/json'}),
+    })
+      .then(res => res.json())
+      .then(result => {
+        this.setState({loggedIn: false, userEmail: ""});
+      });
+  }
+
+  renderMyProfile() {
+    if (this.state.loggedIn) {
+      return (
+        <li className="nav-item">
+          <NavLink to="/profile" exact className="nav-link" activeClassName="nav-link-active">My Profile</NavLink>
+        </li>
+      );
+    }
+  }
+
+  renderUserEmail() {
+    if (this.state.loggedIn) {
+      return (
+        <li className="nav-item">
+          <span className="nav-email">{this.state.userEmail}</span>
+        </li>
+      );
+    }
+  }
+
   renderMenuLogin() {
     if (this.state.loggedIn) {
       return (
         <li className="nav-item">
-          <a className="nav-link" href="#">Logout</a>
+          <a className="nav-link" href="#" onClick={() => this.pressLogout()}>Logout</a>
         </li>
       );
     }
@@ -37,19 +76,22 @@ class App extends Component {
   render() {
     return (
         <Router>
-           <Switch>
-          
+          <Switch>
           <div>
             <ul className="nav justify-content-end">
               <li className="nav-item">
                 <NavLink to="/" exact className="nav-link" activeClassName="nav-link-active">Search</NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink to="/profile" exact className="nav-link" activeClassName="nav-link-active">My Profile</NavLink>
-              </li>
+              {this.renderMyProfile()}
+              {this.renderUserEmail()}
               {this.renderMenuLogin()}
             </ul>
-            <Login showLoginModal={this.state.showLoginModal} hideLoginModal={this.hideLoginModal.bind(this)} />
+            <Login
+              showLoginModal={this.state.showLoginModal}
+              hideLoginModal={this.hideLoginModal.bind(this)}
+              setLoggedIn={this.setLoggedIn.bind(this)}
+              setLoggedOut={this.setLoggedOut.bind(this)}
+            />
              <Route exact path="/" component={TV} />
              <Route exact path="/profile" component={Profile} />
           </div>
