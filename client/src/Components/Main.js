@@ -4,7 +4,7 @@ import Row from "./Row";
 import Col from "./Col";
 import Card from "./Card";
 // import Results from "./Results";
-import ResultList from "./ResultList"
+// import ResultList from "./ResultList"
 import SearchForm from "./SearchForm";
 
 import API from "../utils/API";
@@ -51,8 +51,8 @@ class Main extends Component {
 
       <Container>
         <Row>
-          <div>
-            <ResultList>
+          {/* <div>
+            <ResultList> */}
               {this.state.results.map(result => (
 
                 <div className="container">
@@ -65,9 +65,9 @@ class Main extends Component {
                 </div>
 
               ))}
-            </ResultList>
+            {/* </ResultList>
 
-          </div>
+          </div> */}
 
           <Col size="md-4">
             <Card heading="Search">
