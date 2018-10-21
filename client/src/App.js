@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Main from "./components/Main";
-import Calendar from "./components/Calendar"
+import Today from "./components/Today";
+// import Calendar from "./components/Calendar"
+import IncludeTime from "./components/Calendar/CalHolder/IncludeTime";
 // import './App.css';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -58,6 +60,8 @@ class App extends Component {
             </ul>
             <Login showLoginModal={this.state.showLoginModal} hideLoginModal={this.hideLoginModal.bind(this)} />
              <Route exact path="/" component={TV} />
+             <Route exact path="/calendar" component={IncludeTime} />
+             <Route exact path="/today" component={Today} />
              <Route exact path="/profile" component={Profile} />
           </div>
           </Switch>
