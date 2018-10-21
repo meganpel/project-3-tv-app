@@ -6,6 +6,7 @@ import { Col, Row, Container } from "../../Components/Grid";
 import { List, ListItem } from "../../Components/List";
 import { Input, TextArea, Button } from "../../Components/Form";
 import SimButton from "../../Components/SimButton";
+import DetailsButton from "../../Components/DetailsButton";
 
 class TV extends Component {
   state = {
@@ -13,6 +14,7 @@ class TV extends Component {
     searchResults: [],
     results: [],
     simResults: [],
+    details: [],
     term: "",
   };
 
@@ -22,6 +24,11 @@ class TV extends Component {
   handleBtnClick = event => {
     const value = event.target.value;
     this.searchSimilar(value);
+  }
+
+  handleBtnClick2 = event => {
+    const value = event.target.value;
+    this.details(value);
   }
 
 
@@ -47,6 +54,18 @@ class TV extends Component {
         var answer = res;
         this.setState({
           simResults: answer.data.results,
+          term: "",
+        });
+        console.log(this.state);
+      }).catch(err => console.log(err));
+  };
+
+  details = (value) => {
+    API.details(value)
+      .then(res => {
+        var answer = res;
+        this.setState({
+          details: answer.data,
           term: "",
         });
         console.log(this.state);
@@ -84,9 +103,13 @@ class TV extends Component {
   render() {
     return (
       <Container d-flex justify-content-center>
-      
-      <Col size="col-centered">
-          
+      <br/>
+      {/* <Col size="col-centered"> */}
+      <div class="row">
+      <div class="col-sm-8">
+      Search:
+      </div>
+      <div class="col-sm-4">
             <form>
               <Input
                 value={this.state.term}
@@ -101,7 +124,10 @@ class TV extends Component {
               >
                 Search 
               </Button>
-            </form></Col>
+            </form>
+            </div>
+            </div>
+            {/* </Col> */}
      <br/>
      <strong>
           {this.state.searchResults.map(shows=>(
@@ -112,6 +138,7 @@ class TV extends Component {
               {shows.locations.map(showLocation=>(
                      <div>
                      {showLocation.display_name}
+                     <img src={showLocation.icon}/>
                     </div> 
              ))} 
                       </div>
@@ -137,6 +164,8 @@ class TV extends Component {
     <li>Poster Link: {result.poster_path}</li>
     <li> Key: {result.id}</li>
     <li>overview: {result.overview}</li>
+    <li> Further details: <DetailsButton value={result.name} name="id"  onClick={this.handleBtnClick2}>Find Similar Titles</DetailsButton></li>
+
     <SimButton value={result.id} name="id" onClick={this.handleBtnClick}>Find Similar Titles</SimButton>
   </ul>
   <br/>
@@ -144,6 +173,34 @@ class TV extends Component {
 
 ))}
 </ResultList>
+<ResultList>
+              <div className="col-md">
+                {this.state.details.map(detail => (
+
+                  <div className="container">
+                  
+                   
+                     <div>
+Name: {detail.show.name} <br/>
+Premiere Date: {detail.show.premiered} <br/>
+ Status: {detail.show.status} 
+ <br/>
+ <br/>
+ {/* {detail.map(detailNew => (
+  <div> 
+ Audience Rating: {detailNew.rating.average}
+ </div> 
+))} */}
+                    </div> 
+ 
+                  
+                  </div>
+                ))}
+
+              </div>
+            </ResultList>
+
+
 
  <Col size="md-4">
             <ResultList>

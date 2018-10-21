@@ -4,6 +4,8 @@ const URL = process.env.REACT_APP_DB_URL;
 const URL2 = process.env.REACT_APP_DB_URL_2;
 const URL3 = process.env.REACT_APP_DB_URL_3;
 const URL4 = process.env.REACT_APP_DB_URL_4;
+const URL5 = process.env.REACT_APP_DB_URL_5;
+
 const request = {
     method: 'GET',
     headers: {
@@ -27,6 +29,10 @@ export default {
   
    getToday: function(){
     return axios.get(URL4 + "?api_key=" + process.env.REACT_APP_API_KEY_2);    
+  },
+
+  details: function(id){
+    return axios.get(URL5 + id);
   },
   UserData: function() {
     return axios.get("/api/new");
