@@ -1,5 +1,8 @@
-.justify-content-end {
+.nav {
   background-color: #181818;
+}
+
+.justify-content-end {
   padding: 4px;
 }
 
@@ -9,9 +12,16 @@
 }
 
 .nav-link:hover {
-  color: blue;
+  color: #0074ff;
+}
+
+.nav-email {
+  font-size: 16px;
+  color: grey;
+  display: block;
+  padding: .5rem 1rem;
 }
 
 .nav-link-active {
-  color: #1ab188
+  color: #0074ff
 }
