@@ -1,8 +1,9 @@
 import axios from "axios";
-// let term;
 
 const URL = process.env.REACT_APP_DB_URL;
 const URL2 = process.env.REACT_APP_DB_URL_2;
+const URL3 = process.env.REACT_APP_DB_URL_3;
+const URL4 = process.env.REACT_APP_DB_URL_4;
 const request = {
     method: 'GET',
     headers: {
@@ -20,6 +21,13 @@ export default {
       return axios.get(URL2 + "?api_key=" + process.env.REACT_APP_API_KEY_2  + "&query=" + term);
     }
   ,
+  similar: function(id){
+    return axios.get(URL3 + id + "/similar?api_key=" + process.env.REACT_APP_API_KEY_2);
+  },
+  
+   getToday: function(){
+    return axios.get(URL4 + "?api_key=" + process.env.REACT_APP_API_KEY_2);    
+  },
   UserData: function() {
     return axios.get("/api/new");
   },

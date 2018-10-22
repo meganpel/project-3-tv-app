@@ -4,8 +4,21 @@ import moment from 'moment';
 
 class Calendar extends Component {
 
+    constructor(props) {
+        super(props)
 
-    //styled container
+        this.state = {
+            startDate: moment()
+        };
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(date) {
+        this.setState({
+            startDate: date
+        });
+    }
+
     MyContainer({ className, children }) {
         return (
             <div style={{ padding: '16px', background: '#216ba5', color: '#fff' }}>
@@ -19,14 +32,21 @@ class Calendar extends Component {
         );
     };
 
+    //styled container
+
+
     render() {
         return (
 
             <DatePicker
                 inline
+                dateFormat="YYYY/MM/DD"
                 selected={this.state.startDate}
-                onChange={this.handleChange}
+                onSelect={this.handleChange}
+
                 placeholderText="Click to select a date"
+                isClearable={true}
+                placeholderText="cleared!"
                 //select time
                 showTimeSelect
                 timeFormat="HH:mm"
@@ -35,12 +55,18 @@ class Calendar extends Component {
                 timeCaption="time"
                 //time zone
 
-                utcOffset= "-4"
-                dateFormat = "DD-MMM HH:mm"
-                todayButton = "Today in Puerto Rico"
-                onChange = { this.handleChange } />
+                utcOffset="-4"
+                dateFormat="DD-MMM HH:mm"
+                todayButton="Today in NYC"
+                onChange={this.handleTime}
 
-  )
+                onClickOutside={this.handleClose}
+                calendarContainer={MyContainer}
+                 />
+
+
+
+        )
     }
 
 };

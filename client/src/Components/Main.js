@@ -4,23 +4,29 @@ import Row from "./Row";
 import Col from "./Col";
 import Card from "./Card";
 // import Results from "./Results";
-import ResultList from "./ResultList"
+<<<<<<< HEAD
+import ResultList from "./ResultList";
+=======
+// import ResultList from "./ResultList"
+>>>>>>> 991337111ba7a9aa1448285379231153bb5006ea
 import SearchForm from "./SearchForm";
+import SimButton from "./SimButton2";
 
 import API from "../utils/API";
 
 class Main extends Component {
   state = {
     results: [],
+    results2: [],
     search: "",
 
   };
 
   componentDidMount() {
-    this.searchSimilar();
+    this.searchName();
   }
 
-  searchSimilar = () => {
+  searchName = () => {
     const search = this.state.search
     API.search(search)
       .then(res => {
@@ -37,40 +43,38 @@ class Main extends Component {
     this.setState({
       [name]: value
     })
-  }; ß
+  };
 
   handleFormSubmit = event => {
     event.preventDefault();
     console.log(this.state);
-    this.searchSimilar(this.state.search);
+    this.searchName(this.state.search);
   }
 
+  handleBtnClick = event => {
+    const value = event.target.value;
+    this.searchSimilar(value);
+  }
+
+  searchSimilar = (value) => {
+    API.similar(value)
+      .then(res => {
+        var answer = res;
+        this.setState({
+          results2: answer.data.results
+        });
+        console.log(this.state);
+      }).catch(err => console.log(err));
+  };
 
   render() {
     return (
 
       <Container>
         <Row>
-          <div>
-            <ResultList>
-              {this.state.results.map(result => (
-
-                <div className="container">
-                  <ul className="list-group">
-                    <li>Name: {result.name}</li>
-                    <li>Poster Link: {result.poster_path}</li>
-                    <li> Key: {result.id}</li>
-                    <li>overview: {result.overview}</li>
-                  </ul>
-                </div>
-
-              ))}
-            </ResultList>
-
-          </div>
-
+<<<<<<< HEAD
           <Col size="md-4">
-            <Card heading="Search">
+            <Card heading="Tell us your favorite show">
               <SearchForm
                 value={this.state.search}
                 handleInputChange={this.handleInputChange}
@@ -79,6 +83,59 @@ class Main extends Component {
             </Card>
           </Col>
         </Row>
+        <Row>
+          <div className="col-md">
+            <ResultList>
+=======
+          {/* <div>
+            <ResultList> */}
+>>>>>>> 991337111ba7a9aa1448285379231153bb5006ea
+              {this.state.results.map(result => (
+
+                <div className="container"  key={result.id} >
+                  <ul className="list-group">
+                    <li>Name: {result.name}</li>
+                    <li><a href={`https://image.tmdb.org/t/p/w600_and_h900_bestv2` + `${result.poster_path}`} target="_blank" rel="noopener noreferrer" >Poster Link: Click Here</a></li>
+                    <li> Key: {result.id}</li>
+                    <li>overview: {result.overview}</li>
+                    <SimButton value={result.id} name="id" onClick={this.handleBtnClick}>Find Similar Titles</SimButton>
+                  </ul>
+                </div>
+              ))}
+<<<<<<< HEAD
+            </ResultList>
+          </div>
+=======
+            {/* </ResultList>
+
+          </div> */}
+>>>>>>> 991337111ba7a9aa1448285379231153bb5006ea
+
+
+          <Col size="md-4">
+            <ResultList>
+              <div className="col-md">
+                {this.state.results2.map(result2 => (
+
+                  <div className="container"
+                  
+                   >
+                    <ul className="list-group">
+                      <li>Name: {result2.name} key= {result2.id}</li>
+                      <li><a href={`https://image.tmdb.org/t/p/w600_and_h900_bestv2` + `${result2.poster_path}`} target="_blank" rel="noopener noreferrer">Poster Link: Click Here</a></li>
+                      <li> Key: {result2.id}</li>
+                      <li>overview: {result2.overview}</li>
+
+                    </ul>
+                  </div>
+                ))}
+
+              </div>
+            </ResultList>
+
+          </Col>
+        </Row>
+
       </Container>
     );
   }
