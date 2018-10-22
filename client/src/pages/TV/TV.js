@@ -7,6 +7,9 @@ import { List, ListItem } from "../../Components/List";
 import { Input, TextArea, Button } from "../../Components/Form";
 import SimButton from "../../Components/SimButton";
 import DetailsButton from "../../Components/DetailsButton";
+import '../../Components/ResultList/ResultList.css';
+import Fade from 'react-reveal/Fade';
+
 
 class TV extends Component {
   state = {
@@ -16,7 +19,10 @@ class TV extends Component {
     simResults: [],
     details: [],
     term: "",
+
+    
   };
+  
 
   componentDidMount() {
     this.showCollect();
@@ -66,6 +72,7 @@ class TV extends Component {
         var answer = res;
         this.setState({
           details: answer.data,
+          searchResults: [],
           term: "",
         });
         console.log(this.state);
@@ -92,6 +99,7 @@ class TV extends Component {
         {this.setState({
           results: res.data.results,
           term: ""
+
         });
       }
     )
@@ -129,11 +137,15 @@ class TV extends Component {
             </div>
             {/* </Col> */}
      <br/>
+   
+    
      <strong>
           {this.state.searchResults.map(shows=>(
-              <div>
+     <ResultList><div>
+            <Fade top>
+              
                     {shows.name}
-                  <img src={shows.picture} width='200' height='100'/>
+                  <img className="contain" src={shows.picture} />
 
               {shows.locations.map(showLocation=>(
                      <div>
@@ -141,15 +153,16 @@ class TV extends Component {
                      <img src={showLocation.icon}/>
                     </div> 
              ))} 
-                      </div>
+                      </Fade></div> </ResultList>
                       
             ))
             
             
-            }   </strong>
+            }           </strong>
 
-         
-           
+  
+        
+ 
        {/* {this.state.searchResults.name}
     
        <br/>
@@ -164,7 +177,7 @@ class TV extends Component {
     <li>Poster Link: {result.poster_path}</li>
     <li> Key: {result.id}</li>
     <li>overview: {result.overview}</li>
-    <li> Further details: <DetailsButton value={result.name} name="id"  onClick={this.handleBtnClick2}>Find Similar Titles</DetailsButton></li>
+    <li> Further details: <DetailsButton value={result.name} name="id"  onClick={this.handleBtnClick2}></DetailsButton></li>
 
     <SimButton value={result.id} name="id" onClick={this.handleBtnClick}>Find Similar Titles</SimButton>
   </ul>
