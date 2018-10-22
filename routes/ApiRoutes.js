@@ -2,6 +2,25 @@ var db = require("../models");
 var bcrypt = require("bcrypt");
 
 module.exports = function(app) {
+  app.post("/status", function(req, res) {
+    if (req.session.userId === undefined) {
+      return res.json({
+        success: false,
+      });
+    }
+
+    db.User.findOne({
+      where: {
+        id: req.session.userId
+      }
+    }).then(function(user) {
+      return res.json({
+        success: true,
+        email: user.email
+      });
+    });
+  });
+
   app.post("/login", function(req, res) {
     if (req.body.email === "") {
       return res.json({
@@ -31,9 +50,11 @@ module.exports = function(app) {
 
       bcrypt.compare(req.body.password, user.password, function(err, success) {
         if (success) {
+          req.session.userId = user.id;
           return res.json({
             success: true,
-            message: "User Found!"
+            message: "User Found!",
+            email: user.email,
           });
         } else {
           return res.json({
@@ -72,12 +93,25 @@ module.exports = function(app) {
           email: req.body.email,
           password: hash
         }).then(function(user) {
+          req.session.userId = user.id;
+
           return res.json({
             success: true,
-            message: "User created!"
+            message: "User created!",
+            email: user.email,
           });
         });
       });
     });
   });
+
+  app.post("/logout", function(req, res) {
+    req.session.userId = undefined;
+
+    return res.json({
+      success: true,
+      message: "User Logged Out!",
+    });
+  });
+
 };
