@@ -110,14 +110,14 @@ class App extends Component {
                 </ul>
               </div>
             </nav>
-            <Login
+             <Route exact path="/" component={TV} />
+             <Route exact path="/profile" component={Profile} />
+             <Login
               showLoginModal={this.state.showLoginModal}
               hideLoginModal={this.hideLoginModal.bind(this)}
               setLoggedIn={this.setLoggedIn.bind(this)}
               setLoggedOut={this.setLoggedOut.bind(this)}
             />
-             <Route exact path="/" component={TV} />
-             <Route exact path="/profile" component={Profile} />
           </div>
           </Switch>
         </Router>
