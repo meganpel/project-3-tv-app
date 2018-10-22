@@ -16,12 +16,14 @@ class Login extends Component {
     fetch("http://localhost:3001/login", {
       method: 'POST',
       headers: new Headers({'Content-Type': 'application/json'}),
+      credentials: 'include',
       body: JSON.stringify({email: this.state.loginEmail, password: this.state.loginPassword}),
     })
       .then(res => res.json())
       .then(result => {
         if (result.success) {
           this.props.setLoggedIn(result.email);
+          this.setState({loginEmail: "", loginPassword: ""});
           this.props.hideLoginModal();
         } else {
           this.setState({errorLogin: result.message});
@@ -33,12 +35,14 @@ class Login extends Component {
     fetch("http://localhost:3001/signup", {
       method: 'POST',
       headers: new Headers({'Content-Type': 'application/json'}),
+      credentials: 'include',
       body: JSON.stringify({email: this.state.signUpEmail, password: this.state.signUpPassword}),
     })
       .then(res => res.json())
       .then(result => {
         if (result.success) {
           this.props.setLoggedIn(result.email);
+          this.setState({signUpEmail: "", signUpPassword: ""});
           this.props.hideLoginModal();
         } else {
           this.setState({errorSignUp: result.message});
@@ -60,10 +64,10 @@ class Login extends Component {
             <div className={!this.state.showSignUp ? "hide-side": ""}>
               <h1>Sign Up for Free</h1>
               <div className="field-wrap">
-                <input type="email" placeholder="Email" onChange={(e) => this.setState({signUpEmail: e.target.value})} />
+                <input type="email" placeholder="Email" value={this.state.signUpEmail} onChange={(e) => this.setState({signUpEmail: e.target.value})} />
               </div>
               <div className="field-wrap">
-                <input type="password" placeholder="Password" onChange={(e) => this.setState({signUpPassword: e.target.value})} />
+                <input type="password" placeholder="Password" value={this.state.signUpPassword} onChange={(e) => this.setState({signUpPassword: e.target.value})} />
               </div>
 
               <div className={this.state.errorSignUp ? "error-message" : "error-message-hidden"} >{this.state.errorSignUp}</div>
@@ -75,10 +79,10 @@ class Login extends Component {
             <div className={this.state.showSignUp ? "hide-side": ""}>
               <h1>Welcome Back!</h1>
               <div className="field-wrap">
-                <input type="email" placeholder="Email" onChange={(e) => this.setState({loginEmail: e.target.value})} />
+                <input type="email" placeholder="Email" value={this.state.loginEmail} onChange={(e) => this.setState({loginEmail: e.target.value})} />
               </div>
               <div className="field-wrap">
-                <input type="password" placeholder="Password" onChange={(e) => this.setState({loginPassword: e.target.value})} />
+                <input type="password" placeholder="Password" value={this.state.loginPassword} onChange={(e) => this.setState({loginPassword: e.target.value})} />
               </div>
 
               <div className={this.state.errorLogin ? "error-message" : "error-message-hidden"} >{this.state.errorLogin}</div>

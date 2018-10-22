@@ -14,6 +14,20 @@ class App extends Component {
     userEmail: "",
   };
 
+  componentDidMount() {
+    fetch("http://localhost:3001/status", {
+      method: 'POST',
+      headers: new Headers({'Content-Type': 'application/json'}),
+      credentials: 'include'
+    })
+      .then(res => res.json())
+      .then(result => {
+        if (result.success) {
+          this.setState({loggedIn: true, userEmail: result.email});
+        }
+      });
+  }
+
   setLoggedIn(email) {
     this.setState({loggedIn: true, userEmail: email});
   }
@@ -26,6 +40,7 @@ class App extends Component {
     fetch("http://localhost:3001/logout", {
       method: 'POST',
       headers: new Headers({'Content-Type': 'application/json'}),
+      credentials: 'include'
     })
       .then(res => res.json())
       .then(result => {
@@ -78,14 +93,23 @@ class App extends Component {
         <Router>
           <Switch>
           <div>
-            <ul className="nav justify-content-end">
-              <li className="nav-item">
-                <NavLink to="/" exact className="nav-link" activeClassName="nav-link-active">Search</NavLink>
-              </li>
-              {this.renderMyProfile()}
-              {this.renderUserEmail()}
-              {this.renderMenuLogin()}
-            </ul>
+            <nav className="navbar nav">
+              <div className="container">
+                <div className="nav">
+                  <img src="logo.png" />
+                  <ul className="nav justify-content-end">
+                    {this.renderUserEmail()}
+                  </ul>
+                </div>
+                <ul className="nav justify-content-end">
+                  <li className="nav-item">
+                    <NavLink to="/" exact className="nav-link" activeClassName="nav-link-active">Search</NavLink>
+                  </li>
+                  {this.renderMyProfile()}
+                  {this.renderMenuLogin()}
+                </ul>
+              </div>
+            </nav>
             <Login
               showLoginModal={this.state.showLoginModal}
               hideLoginModal={this.hideLoginModal.bind(this)}
