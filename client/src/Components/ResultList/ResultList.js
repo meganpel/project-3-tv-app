@@ -3,9 +3,11 @@ import React from "react";
 
 const ResultList = ({ children }) => {
   return (
-    <div className="card fade-in">
+    <div className="card">
       <div className="card-body">
+      <span>
           {children}
+          </span>
       </div>
     </div>
   );

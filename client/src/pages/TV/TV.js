@@ -9,6 +9,7 @@ import SimButton from "../../Components/SimButton";
 import DetailsButton from "../../Components/DetailsButton";
 import '../../Components/ResultList/ResultList.css';
 import Fade from 'react-reveal/Fade';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 
 class TV extends Component {
@@ -118,7 +119,13 @@ class TV extends Component {
       Search:
       </div>
       <div class="col-sm-4">
-            <form>
+
+      <Tabs>
+    <TabList>
+         <Tab> test  </Tab> 
+         <Tab> test2  </Tab> </TabList>
+         <TabPanel>
+         <form>
               <Input
                 value={this.state.term}
                 onChange={this.handleInputChange}
@@ -133,6 +140,8 @@ class TV extends Component {
                 Search 
               </Button>
             </form>
+            </TabPanel>
+            <TabPanel> test </TabPanel>  </Tabs>
             </div>
             </div>
             {/* </Col> */}
@@ -174,7 +183,7 @@ class TV extends Component {
 <div className="container">
   <ul className="list-group">
     <li>Name: {result.name}</li>
-    <li>Poster Link: {result.poster_path}</li>
+    <img className="contain" src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2` + `${result.poster_path}`}/> 
     <li> Key: {result.id}</li>
     <li>overview: {result.overview}</li>
     <li> Further details: <DetailsButton value={result.name} name="id"  onClick={this.handleBtnClick2}></DetailsButton></li>
