@@ -5,7 +5,9 @@ const ResultList = ({ children }) => {
   return (
     <div className="card">
       <div className="card-body">
+      <span>
           {children}
+          </span>
       </div>
     </div>
   );

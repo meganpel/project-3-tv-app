@@ -6,6 +6,11 @@ import { Col, Row, Container } from "../../Components/Grid";
 import { List, ListItem } from "../../Components/List";
 import { Input, TextArea, Button } from "../../Components/Form";
 import SimButton from "../../Components/SimButton";
+import DetailsButton from "../../Components/DetailsButton";
+import '../../Components/ResultList/ResultList.css';
+import Fade from 'react-reveal/Fade';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+
 
 class TV extends Component {
   state = {
@@ -13,8 +18,12 @@ class TV extends Component {
     searchResults: [],
     results: [],
     simResults: [],
+    details: [],
     term: "",
+
+    
   };
+  
 
   componentDidMount() {
     this.showCollect();
@@ -22,6 +31,11 @@ class TV extends Component {
   handleBtnClick = event => {
     const value = event.target.value;
     this.searchSimilar(value);
+  }
+
+  handleBtnClick2 = event => {
+    const value = event.target.value;
+    this.details(value);
   }
 
 
@@ -46,7 +60,21 @@ class TV extends Component {
       .then(res => {
         var answer = res;
         this.setState({
-          simResults: answer.data.results
+          simResults: answer.data.results,
+          term: "",
+        });
+        console.log(this.state);
+      }).catch(err => console.log(err));
+  };
+
+  details = (value) => {
+    API.details(value)
+      .then(res => {
+        var answer = res;
+        this.setState({
+          details: answer.data,
+          searchResults: [],
+          term: "",
         });
         console.log(this.state);
       }).catch(err => console.log(err));
@@ -59,6 +87,7 @@ class TV extends Component {
       .then(res =>
         {this.setState({
           searchResults: res.data.results,
+          simResults:[],
           term: ""
         });
     
@@ -71,6 +100,7 @@ class TV extends Component {
         {this.setState({
           results: res.data.results,
           term: ""
+
         });
       }
     )
@@ -82,10 +112,20 @@ class TV extends Component {
   render() {
     return (
       <Container d-flex justify-content-center>
-      
-      <Col size="col-centered">
-          
-            <form>
+      <br/>
+      {/* <Col size="col-centered"> */}
+      <div class="row">
+      <div class="col-sm-8">
+      Search:
+      </div>
+      <div class="col-sm-4">
+
+      <Tabs>
+    <TabList>
+         <Tab> test  </Tab> 
+         <Tab> test2  </Tab> </TabList>
+         <TabPanel>
+         <form>
               <Input
                 value={this.state.term}
                 onChange={this.handleInputChange}
@@ -99,28 +139,39 @@ class TV extends Component {
               >
                 Search 
               </Button>
-            </form></Col>
+            </form>
+            </TabPanel>
+            <TabPanel> test </TabPanel>  </Tabs>
+            </div>
+            </div>
+            {/* </Col> */}
      <br/>
+   
+    
      <strong>
           {this.state.searchResults.map(shows=>(
-              <div>
+     <ResultList><div>
+            <Fade top>
+              
                     {shows.name}
-                  <img src={shows.picture} width='200' height='100'/>
+                  <img className="contain" src={shows.picture} />
 
               {shows.locations.map(showLocation=>(
                      <div>
                      {showLocation.display_name}
+                     <img src={showLocation.icon}/>
                     </div> 
              ))} 
-                      </div>
+                      </Fade></div> </ResultList>
                       
             ))
             
             
-            }   </strong>
+            }           </strong>
 
-         
-           
+  
+        
+ 
        {/* {this.state.searchResults.name}
     
        <br/>
@@ -132,9 +183,11 @@ class TV extends Component {
 <div className="container">
   <ul className="list-group">
     <li>Name: {result.name}</li>
-    <li>Poster Link: {result.poster_path}</li>
+    <img className="contain" src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2` + `${result.poster_path}`}/> 
     <li> Key: {result.id}</li>
     <li>overview: {result.overview}</li>
+    <li> Further details: <DetailsButton value={result.name} name="id"  onClick={this.handleBtnClick2}></DetailsButton></li>
+
     <SimButton value={result.id} name="id" onClick={this.handleBtnClick}>Find Similar Titles</SimButton>
   </ul>
   <br/>
@@ -142,6 +195,34 @@ class TV extends Component {
 
 ))}
 </ResultList>
+<ResultList>
+              <div className="col-md">
+                {this.state.details.map(detail => (
+
+                  <div className="container">
+                  
+                   
+                     <div>
+Name: {detail.show.name} <br/>
+Premiere Date: {detail.show.premiered} <br/>
+ Status: {detail.show.status} 
+ <br/>
+ <br/>
+ {/* {detail.map(detailNew => (
+  <div> 
+ Audience Rating: {detailNew.rating.average}
+ </div> 
+))} */}
+                    </div> 
+ 
+                  
+                  </div>
+                ))}
+
+              </div>
+            </ResultList>
+
+
 
  <Col size="md-4">
             <ResultList>
