@@ -10,13 +10,6 @@ const SimButton = props => (
   </button>
 
 )
-//    handleBtnClick = event => {
-//     const value = event.target;
-//     API.similar(value)
-//     .then(res => {
-//         console.log(res);
-//     }).catch(err => console.log(err));
-// }
 
 
 export default SimButton;
