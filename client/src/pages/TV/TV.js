@@ -21,11 +21,12 @@ class TV extends Component {
     simResults: [],
     details: [],
     term: "",
-    today: []
+    today: [],
 
     
   };
-  
+
+
 
   componentDidMount() {
     this.showCollect();
@@ -60,6 +61,7 @@ class TV extends Component {
     });
   };
 
+
   searchSimilar = (value) => {
     API.similar(value)
       .then(res => {
@@ -83,6 +85,17 @@ class TV extends Component {
       }).catch(err => console.log(err));
   };
 
+  code= (value) => {
+    API.code(value)
+      .then(res => {
+        this.setState({
+          details: res.data,
+          term: ""
+        });
+        console.log(this.state);
+      }).catch(err => console.log(err));
+  };
+
   details = (value) => {
     API.details(value)
       .then(res => {
@@ -99,13 +112,12 @@ class TV extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
     if (this.state.term) {
-      API.Find(this.state.term)
+    API.search(this.state.term)
       .then(res =>
         {this.setState({
-          searchResults: res.data.results,
+          results: res.data.results,
           simResults:[],
           shows: [],
-          results: [],
           today: [],
           details: [],
           term: ""
@@ -114,17 +126,7 @@ class TV extends Component {
         }
       )
       .catch(err => console.log(err));
-  
-      // API.search(this.state.term)
-      // .then(res =>
-      //   {this.setState({
-      //     results: res.data.results,
-      //     term: ""
-
-      //   });
-      // }
-    // )
-  }
+    }
 };
 handleFormSubmit2 = event => {
   event.preventDefault();
@@ -148,12 +150,12 @@ handleFormSubmit2 = event => {
 
 };
 
-
   render() {
     return (
+    
       <Container d-flex justify-content-center>
       <br/>
-      {/* <Col size="col-centered"> */}
+
       <div class="row">
       <div class="col-sm-8">
       Search:
@@ -162,8 +164,9 @@ handleFormSubmit2 = event => {
 
       <Tabs>
     <TabList>
-         <Tab> test  </Tab> 
-         <Tab> test2  </Tab> </TabList>
+         <Tab>Term</Tab> 
+         <Tab>Current Date</Tab>
+         <Tab>Select Date</Tab>  </TabList>
          <TabPanel>
          <form>
               <Input
@@ -187,74 +190,46 @@ handleFormSubmit2 = event => {
               >
                 Search 
               </Button>
+               </TabPanel> 
+               
+               <TabPanel> Find out what's on TV today <br/>
+              
+            <Button
+                onClick={this.handleFormSubmit3}
+              >
+                Search 
+              </Button>
                </TabPanel>  </Tabs>
             </div>
             </div>
-            {/* </Col> */}
+       
      <br/>
    
-    
-     <strong>  
-       
-         <Fade top><h1> Did you mean...</h1> </Fade>
-          {this.state.searchResults.map(shows=>(
-     <ResultList>                        
-
-       {/* <div className="dataDiv"style={{backgroundImage: `url(${shows.picture})`} } > */}
-<div>
-            <Fade top>
-            
-            <table class="table">
-            <tbody>    <tr>
-      <th scope="col"><img className="contain" src={shows.picture} /></th>
-      <th scope="col"> {shows.name}<br/> Available on: 
-      {shows.locations.map(showLocation=>(
-<div>
-              
-                    
- <a href={showLocation.url}><img src={showLocation.icon}/></a>
- 
-                    </div> 
-             ))} 
-               <SimButton value={shows.name} name="id" onClick={this.handleBtnClick3}>Select this Program</SimButton>
-                    </th>
-  
-    </tr>
-   
-  </tbody>
-    </table>
-
-                            
- </Fade>  
-             
-                      </div>    </ResultList>
-                      
-            ))
-            
-            
-            }     </strong>
-
-  
-
 <ResultList>
        {this.state.results.map(result => (
 
-<div className="container">
+<div className="container"><Fade top> 
   <ul className="list-group">
-    <li>Name: {result.name}</li>
-    <img className="contain" src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2` + `${result.poster_path}`}/> 
-    <li> Key: {result.id}</li>
-    <li>overview: {result.overview}</li>
+     <table class="table">
+            <tbody>    <tr>
+      <th scope="col">
+    <img className="contain"  onError={(e)=>{e.target.onerror = null; e.target.src=""}} src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2` + `${result.poster_path}`}/> </th>
+    <th scope="col" > <p className="name">{result.name}</p>
+ {result.overview} </th>    </tr>
+   
+   </tbody>
+     </table>
+    
     <li> Further details: <DetailsButton value={result.name} name="id"  onClick={this.handleBtnClick2}></DetailsButton></li>
 
     <SimButton value={result.id} name="id" onClick={this.handleBtnClick}>Find Similar Titles</SimButton>
   </ul>
-  <br/>
+  <br/></Fade> 
 </div>
 
 ))}
 </ResultList>
-<ResultList>
+<ResultList><Fade top> 
               <div className="col-md">
                 {this.state.details.map(detail => (
 
@@ -278,22 +253,30 @@ Premiere Date: {detail.show.premiered} <br/>
                   </div>
                 ))}
 
-              </div>
+              </div></Fade> 
             </ResultList>
-            <ResultList>
+          
+
+          <ResultList>
        {this.state.today.map(result => (
 
-<div className="container">
+<div className="container"><Fade top> 
   <ul className="list-group">
-    <li>Name: {result.name}</li>
-    <img className="contain" src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2` + `${result.poster_path}`}/> 
-    <li> Key: {result.id}</li>
-    <li>overview: {result.overview}</li>
+     <table class="table">
+            <tbody>    <tr>
+      <th scope="col">
+    <img className="contain" src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2` + `${result.poster_path}`}/> </th>
+    <th scope="col" > <p className="name">{result.name}</p>
+ {result.overview} </th>    </tr>
+   
+   </tbody>
+     </table>
+    
     <li> Further details: <DetailsButton value={result.name} name="id"  onClick={this.handleBtnClick2}></DetailsButton></li>
 
     <SimButton value={result.id} name="id" onClick={this.handleBtnClick}>Find Similar Titles</SimButton>
   </ul>
-  <br/>
+  <br/></Fade> 
 </div>
 
 ))}
@@ -301,7 +284,7 @@ Premiere Date: {detail.show.premiered} <br/>
 
 
  <Col size="md-4">
-            <ResultList>
+            <ResultList><Fade top> 
               <div className="col-md">
                 {this.state.simResults.map(result2 => (
 
@@ -318,34 +301,10 @@ Premiere Date: {detail.show.premiered} <br/>
                   </div>
                 ))}
 
-              </div>
+              </div></Fade>
             </ResultList>
 
           </Col>
-     {/* <Col size="col-centered">
-           
-          {this.state.searchResults.length ? (
-          <List>
-                {this.state.searchResults.map(tv => (
-                  <ListItem key={tv._id}>
-                       <strong> {tv.name}</strong>
-       
-                       
-     
-
-                  </ListItem>
-                ))}
-              </List>
-            ) : (
-<h3>No Results to Display</h3>
-            )}
-          </Col>
-          <Col size="col-centered">
-
-            ) : (
-<h3>No Results to Display</h3>
-            )}
-            </Col> */}
       </Container>
     );
   }

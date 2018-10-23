@@ -29,6 +29,7 @@
     "react-router-dom": "^4.3.1",
     "react-scripts": "^2.0.5",
     "react-scroll-to-element": "^0.2.0",
+    "react-select": "^2.1.0",
     "react-tabs": "^2.3.0",
     "reactstrap": "^6.5.0"
   },

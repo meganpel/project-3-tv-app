@@ -17,5 +17,14 @@ h1{
 table{
     margin-left: auto;
  margin-right: auto;
- font-size: 30px;
+
+}
+
+.name{
+    font-size: 30px;
+}
+
+
+.card-body, .card{
+    border:0px;
 }
