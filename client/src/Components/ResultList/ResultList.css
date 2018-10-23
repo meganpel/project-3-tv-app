@@ -1,5 +1,30 @@
 .contain {
-    height: 200px;
-    width: 200px;
+    height: 350px;
+    width: 350px;
     object-fit: contain;
     }
+
+
+th{
+   padding-left:10px;
+}
+
+h1{
+    color: #000;
+    font-weight: bold;
+}
+
+table{
+    margin-left: auto;
+ margin-right: auto;
+
+}
+
+.name{
+    font-size: 30px;
+}
+
+
+.card-body, .card{
+    border:0px;
+}

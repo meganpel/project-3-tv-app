@@ -12,6 +12,7 @@ import Fade from 'react-reveal/Fade';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 
+
 class TV extends Component {
   state = {
     shows: [],
@@ -20,10 +21,12 @@ class TV extends Component {
     simResults: [],
     details: [],
     term: "",
+    today: [],
 
     
   };
-  
+
+
 
   componentDidMount() {
     this.showCollect();
@@ -37,7 +40,10 @@ class TV extends Component {
     const value = event.target.value;
     this.details(value);
   }
-
+  handleBtnClick3 = event => {
+    const value = event.target.value;
+    this.search(value);
+  }
 
   showCollect = () => {
     API.UserData()
@@ -55,6 +61,7 @@ class TV extends Component {
     });
   };
 
+
   searchSimilar = (value) => {
     API.similar(value)
       .then(res => {
@@ -62,6 +69,28 @@ class TV extends Component {
         this.setState({
           simResults: answer.data.results,
           term: "",
+        });
+        console.log(this.state);
+      }).catch(err => console.log(err));
+  };
+
+  search= (value) => {
+    API.search(value)
+      .then(res => {
+        this.setState({
+          results: res.data.results,
+          term: ""
+        });
+        console.log(this.state);
+      }).catch(err => console.log(err));
+  };
+
+  code= (value) => {
+    API.code(value)
+      .then(res => {
+        this.setState({
+          details: res.data,
+          term: ""
         });
         console.log(this.state);
       }).catch(err => console.log(err));
@@ -83,37 +112,50 @@ class TV extends Component {
   handleFormSubmit = event => {
     event.preventDefault();
     if (this.state.term) {
-      API.Find(this.state.term)
+    API.search(this.state.term)
       .then(res =>
         {this.setState({
-          searchResults: res.data.results,
+          results: res.data.results,
           simResults:[],
+          shows: [],
+          today: [],
+          details: [],
           term: ""
         });
     
         }
       )
       .catch(err => console.log(err));
+    }
+};
+handleFormSubmit2 = event => {
+  event.preventDefault();
   
-      API.search(this.state.term)
-      .then(res =>
-        {this.setState({
-          results: res.data.results,
-          term: ""
-
-        });
+    API.getToday()
+    .then(res =>
+      {this.setState({
+        today: res.data.results,
+        shows: [],
+    searchResults: [],
+    results: [],
+    simResults: [],
+    details: [],
+  
+        term:""
+      });
+  
       }
     )
-  }
+    .catch(err => console.log(err));
+
 };
-
-
 
   render() {
     return (
+    
       <Container d-flex justify-content-center>
       <br/>
-      {/* <Col size="col-centered"> */}
+
       <div class="row">
       <div class="col-sm-8">
       Search:
@@ -122,8 +164,9 @@ class TV extends Component {
 
       <Tabs>
     <TabList>
-         <Tab> test  </Tab> 
-         <Tab> test2  </Tab> </TabList>
+         <Tab>Term</Tab> 
+         <Tab>Current Date</Tab>
+         <Tab>Select Date</Tab>  </TabList>
          <TabPanel>
          <form>
               <Input
@@ -141,61 +184,52 @@ class TV extends Component {
               </Button>
             </form>
             </TabPanel>
-            <TabPanel> test </TabPanel>  </Tabs>
+            <TabPanel> Find what's on TV Today <br/>
+            <Button
+                onClick={this.handleFormSubmit2}
+              >
+                Search 
+              </Button>
+               </TabPanel> 
+               
+               <TabPanel> Find out what's on TV today <br/>
+              
+            <Button
+                onClick={this.handleFormSubmit3}
+              >
+                Search 
+              </Button>
+               </TabPanel>  </Tabs>
             </div>
             </div>
-            {/* </Col> */}
+       
      <br/>
    
-    
-     <strong>
-          {this.state.searchResults.map(shows=>(
-     <ResultList><div>
-            <Fade top>
-              
-                    {shows.name}
-                  <img className="contain" src={shows.picture} />
-
-              {shows.locations.map(showLocation=>(
-                     <div>
-                     {showLocation.display_name}
-                     <img src={showLocation.icon}/>
-                    </div> 
-             ))} 
-                      </Fade></div> </ResultList>
-                      
-            ))
-            
-            
-            }           </strong>
-
-  
-        
- 
-       {/* {this.state.searchResults.name}
-    
-       <br/>
-       <img src={this.state.searchResults.picture} width='200' height='100'/> */}
-
 <ResultList>
        {this.state.results.map(result => (
 
-<div className="container">
+<div className="container"><Fade top> 
   <ul className="list-group">
-    <li>Name: {result.name}</li>
-    <img className="contain" src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2` + `${result.poster_path}`}/> 
-    <li> Key: {result.id}</li>
-    <li>overview: {result.overview}</li>
+     <table class="table">
+            <tbody>    <tr>
+      <th scope="col">
+    <img className="contain"  onError={(e)=>{e.target.onerror = null; e.target.src=""}} src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2` + `${result.poster_path}`}/> </th>
+    <th scope="col" > <p className="name">{result.name}</p>
+ {result.overview} </th>    </tr>
+   
+   </tbody>
+     </table>
+    
     <li> Further details: <DetailsButton value={result.name} name="id"  onClick={this.handleBtnClick2}></DetailsButton></li>
 
     <SimButton value={result.id} name="id" onClick={this.handleBtnClick}>Find Similar Titles</SimButton>
   </ul>
-  <br/>
+  <br/></Fade> 
 </div>
 
 ))}
 </ResultList>
-<ResultList>
+<ResultList><Fade top> 
               <div className="col-md">
                 {this.state.details.map(detail => (
 
@@ -219,13 +253,38 @@ Premiere Date: {detail.show.premiered} <br/>
                   </div>
                 ))}
 
-              </div>
+              </div></Fade> 
             </ResultList>
+          
 
+          <ResultList>
+       {this.state.today.map(result => (
+
+<div className="container"><Fade top> 
+  <ul className="list-group">
+     <table class="table">
+            <tbody>    <tr>
+      <th scope="col">
+    <img className="contain" src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2` + `${result.poster_path}`}/> </th>
+    <th scope="col" > <p className="name">{result.name}</p>
+ {result.overview} </th>    </tr>
+   
+   </tbody>
+     </table>
+    
+    <li> Further details: <DetailsButton value={result.name} name="id"  onClick={this.handleBtnClick2}></DetailsButton></li>
+
+    <SimButton value={result.id} name="id" onClick={this.handleBtnClick}>Find Similar Titles</SimButton>
+  </ul>
+  <br/></Fade> 
+</div>
+
+))}
+</ResultList>
 
 
  <Col size="md-4">
-            <ResultList>
+            <ResultList><Fade top> 
               <div className="col-md">
                 {this.state.simResults.map(result2 => (
 
@@ -242,34 +301,10 @@ Premiere Date: {detail.show.premiered} <br/>
                   </div>
                 ))}
 
-              </div>
+              </div></Fade>
             </ResultList>
 
           </Col>
-     {/* <Col size="col-centered">
-           
-          {this.state.searchResults.length ? (
-          <List>
-                {this.state.searchResults.map(tv => (
-                  <ListItem key={tv._id}>
-                       <strong> {tv.name}</strong>
-       
-                       
-     
-
-                  </ListItem>
-                ))}
-              </List>
-            ) : (
-<h3>No Results to Display</h3>
-            )}
-          </Col>
-          <Col size="col-centered">
-
-            ) : (
-<h3>No Results to Display</h3>
-            )}
-            </Col> */}
       </Container>
     );
   }
