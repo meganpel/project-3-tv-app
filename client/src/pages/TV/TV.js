@@ -12,6 +12,7 @@ import Fade from 'react-reveal/Fade';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 
+
 class TV extends Component {
   state = {
     shows: [],
@@ -20,6 +21,7 @@ class TV extends Component {
     simResults: [],
     details: [],
     term: "",
+    today: []
 
     
   };
@@ -37,7 +39,10 @@ class TV extends Component {
     const value = event.target.value;
     this.details(value);
   }
-
+  handleBtnClick3 = event => {
+    const value = event.target.value;
+    this.search(value);
+  }
 
   showCollect = () => {
     API.UserData()
@@ -67,6 +72,17 @@ class TV extends Component {
       }).catch(err => console.log(err));
   };
 
+  search= (value) => {
+    API.search(value)
+      .then(res => {
+        this.setState({
+          results: res.data.results,
+          term: ""
+        });
+        console.log(this.state);
+      }).catch(err => console.log(err));
+  };
+
   details = (value) => {
     API.details(value)
       .then(res => {
@@ -88,6 +104,10 @@ class TV extends Component {
         {this.setState({
           searchResults: res.data.results,
           simResults:[],
+          shows: [],
+          results: [],
+          today: [],
+          details: [],
           term: ""
         });
     
@@ -95,18 +115,38 @@ class TV extends Component {
       )
       .catch(err => console.log(err));
   
-      API.search(this.state.term)
-      .then(res =>
-        {this.setState({
-          results: res.data.results,
-          term: ""
+      // API.search(this.state.term)
+      // .then(res =>
+      //   {this.setState({
+      //     results: res.data.results,
+      //     term: ""
 
-        });
-      }
-    )
+      //   });
+      // }
+    // )
   }
 };
+handleFormSubmit2 = event => {
+  event.preventDefault();
+  
+    API.getToday()
+    .then(res =>
+      {this.setState({
+        today: res.data.results,
+        shows: [],
+    searchResults: [],
+    results: [],
+    simResults: [],
+    details: [],
+  
+        term:""
+      });
+  
+      }
+    )
+    .catch(err => console.log(err));
 
+};
 
 
   render() {
@@ -141,41 +181,60 @@ class TV extends Component {
               </Button>
             </form>
             </TabPanel>
-            <TabPanel> test </TabPanel>  </Tabs>
+            <TabPanel> Find what's on TV Today <br/>
+            <Button
+                onClick={this.handleFormSubmit2}
+              >
+                Search 
+              </Button>
+               </TabPanel>  </Tabs>
             </div>
             </div>
             {/* </Col> */}
      <br/>
    
     
-     <strong>
+     <strong>  
+       
+         <Fade top><h1> Did you mean...</h1> </Fade>
           {this.state.searchResults.map(shows=>(
-     <ResultList><div>
-            <Fade top>
-              
-                    {shows.name}
-                  <img className="contain" src={shows.picture} />
+     <ResultList>                        
 
-              {shows.locations.map(showLocation=>(
-                     <div>
-                     {showLocation.display_name}
-                     <img src={showLocation.icon}/>
+       {/* <div className="dataDiv"style={{backgroundImage: `url(${shows.picture})`} } > */}
+<div>
+            <Fade top>
+            
+            <table class="table">
+            <tbody>    <tr>
+      <th scope="col"><img className="contain" src={shows.picture} /></th>
+      <th scope="col"> {shows.name}<br/> Available on: 
+      {shows.locations.map(showLocation=>(
+<div>
+              
+                    
+ <a href={showLocation.url}><img src={showLocation.icon}/></a>
+ 
                     </div> 
              ))} 
-                      </Fade></div> </ResultList>
+               <SimButton value={shows.name} name="id" onClick={this.handleBtnClick3}>Select this Program</SimButton>
+                    </th>
+  
+    </tr>
+   
+  </tbody>
+    </table>
+
+                            
+ </Fade>  
+             
+                      </div>    </ResultList>
                       
             ))
             
             
-            }           </strong>
+            }     </strong>
 
   
-        
- 
-       {/* {this.state.searchResults.name}
-    
-       <br/>
-       <img src={this.state.searchResults.picture} width='200' height='100'/> */}
 
 <ResultList>
        {this.state.results.map(result => (
@@ -221,7 +280,24 @@ Premiere Date: {detail.show.premiered} <br/>
 
               </div>
             </ResultList>
+            <ResultList>
+       {this.state.today.map(result => (
 
+<div className="container">
+  <ul className="list-group">
+    <li>Name: {result.name}</li>
+    <img className="contain" src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2` + `${result.poster_path}`}/> 
+    <li> Key: {result.id}</li>
+    <li>overview: {result.overview}</li>
+    <li> Further details: <DetailsButton value={result.name} name="id"  onClick={this.handleBtnClick2}></DetailsButton></li>
+
+    <SimButton value={result.id} name="id" onClick={this.handleBtnClick}>Find Similar Titles</SimButton>
+  </ul>
+  <br/>
+</div>
+
+))}
+</ResultList>
 
 
  <Col size="md-4">
