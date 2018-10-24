@@ -25,3 +25,7 @@
 .nav-link-active {
   color: #0074ff
 }
+
+*{
+  font-family: 'IBM Plex Sans', sans-serif;
+}

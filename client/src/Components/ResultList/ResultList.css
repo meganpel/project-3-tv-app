@@ -27,4 +27,47 @@ table{
 
 .card-body, .card{
     border:0px;
+
+}
+
+.amazon {
+    background:rgb(35, 112, 255);
+    font-weight: bold;
+    border-color: transparent;
+    padding: 3px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #fff;
+}
+
+.hulu {
+    background: rgb(34, 238, 61);
+    font-weight: bold;
+    border-color: transparent;
+    padding: 3px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #fff;
+}
+
+.netflix {
+    background: rgb(255, 0, 0);
+    font-weight: bold;
+    border-color: transparent;
+    padding: 3px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #fff;
 }

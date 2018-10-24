@@ -96,7 +96,7 @@ class App extends Component {
             <nav className="navbar nav">
               <div className="container">
                 <div className="nav">
-                  <img src="logo.png" />
+                <img src="images/logo-icon-2.png" width="78" height="50"/>
                   <ul className="nav justify-content-end">
                     {this.renderUserEmail()}
                   </ul>

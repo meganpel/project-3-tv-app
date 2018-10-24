@@ -5,8 +5,8 @@ const URL2 = process.env.REACT_APP_DB_URL_2;
 const URL3 = process.env.REACT_APP_DB_URL_3;
 const URL4 = process.env.REACT_APP_DB_URL_4;
 const URL5 = process.env.REACT_APP_DB_URL_5;
-const URL6 = process.env.REACT_APP_DB_URL_6;
-
+// const URL6 = process.env.REACT_APP_DB_URL_6;
+const URL7 = process.env.REACT_APP_DB_URL_7;
 const request = {
     method: 'GET',
     headers: {
@@ -36,7 +36,7 @@ export default {
     return axios.get(URL5 + id);
   },
  code: function(term){
-    return axios.get(URL6 + term);
+    return axios.get(URL7 + '&date=' + term);
   },
   UserData: function() {
     return axios.get("/api/new");
