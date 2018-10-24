@@ -11,7 +11,6 @@ import WatchButton from "../../Components/WatchButton";
 import '../../Components/ResultList/ResultList.css';
 import Fade from 'react-reveal/Fade';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import Today from "../../Components/Today";
 
 class TV extends Component {
   state = {
@@ -26,9 +25,9 @@ class TV extends Component {
 
 
 
-  componentDidMount() {
-    this.showCollect();
-  }
+  // componentDidMount() {
+  //   this.showCollect();
+  // }
   handleBtnClick = event => {
     const value = event.target.value;
     this.searchSimilar(value);
@@ -43,13 +42,13 @@ class TV extends Component {
     this.search(value);
   }
 
-  showCollect = () => {
-    API.UserData()
-      .then(res =>
-        this.setState({ shows: res.data })
-      )
-      .catch(err => console.log(err));
-  };
+  // showCollect = () => {
+  //   API.UserData()
+  //     .then(res =>
+  //       this.setState({ shows: res.data })
+  //     )
+  //     .catch(err => console.log(err));
+  // };
 
 
   handleInputChange = event => {
@@ -66,6 +65,11 @@ class TV extends Component {
         var answer = res;
         this.setState({
           simResults: answer.data.results,
+          shows: [],
+          searchResults: [],
+          results: [],
+          details: [],
+          today: [],
           term: "",
         });
         console.log(this.state);
@@ -77,7 +81,12 @@ class TV extends Component {
       .then(res => {
         this.setState({
           results: res.data.results,
-          term: ""
+          shows: [],
+          searchResults: [],
+          simResults: [],
+          details: [],
+          term: "",
+          today: []
         });
         console.log(this.state);
       }).catch(err => console.log(err));
@@ -170,16 +179,16 @@ handleFormSubmit3 = event => {
     return (
     
       <Container d-flex justify-content-center>
-      <br/>
+  <p></p>
 
-      <div class="row">
-      <div class="col-sm-8">
+      <div className="row">
+      <div className="col-sm-8">
       <Fade top> 
       <img src="images/logo-icon.png" width="274" height="177"/>
      <img src="images/observer.png"/>
 </Fade>
       </div>
-      <div class="col-sm-4">
+      <div className="col-sm-4">
 
       <Tabs>
     <TabList>
@@ -203,7 +212,7 @@ handleFormSubmit3 = event => {
               </Button>
             </form>
             </TabPanel>
-            <TabPanel> Find what's on TV Today <br/>
+            <TabPanel> Find what's on TV Today <p></p>
             <Button
                 onClick={this.handleFormSubmit2}
               >
@@ -211,7 +220,8 @@ handleFormSubmit3 = event => {
               </Button>
                </TabPanel> 
                
-               <TabPanel> Find out what's on TV by specific date <br/>
+               <TabPanel> Find out what's on TV by specific date
+                <p> <i>Note: Currently in testing phase</i></p>
                <Input type="date" 
                 value={this.state.term}
                 onChange={this.handleInputChange}
@@ -229,23 +239,22 @@ handleFormSubmit3 = event => {
             </div>
             </div>
        
-     <br/>
+            <p></p>
    
 <ResultList>
        {this.state.results.map(result => (
 
 <div className="container"><Fade top> 
   <ul className="list-group">
-     <table class="table">
+     <table className="table">
             <tbody>    <tr>
       <th scope="col">
       <img className="contain"  onError={(e)=>{e.target.onerror = null; e.target.src="images/logo-icon.png"}} src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2` + `${result.poster_path}`}/> </th>
     <th scope="col" > <p className="name">{result.name}</p>
  {result.overview} 
- <br/> <br/> 
-  <WatchButton/>
- <br/> <br/> 
- <i>Check Availability on:</i> <br/>
+  <p></p>
+  <p><WatchButton/><WatchButton/></p> 
+<p> <i>Check Availability on:</i></p>
 
  <a href={process.env.REACT_APP_DB_URL_8 + result.name + ' site:netflix.com'} target="_blank"><button value={result.name} className='netflix'>Netflix</button></a>
  <a href={process.env.REACT_APP_DB_URL_8 + result.name + ' site:hulu.com'} target="_blank"><button value={result.name} className='hulu'>Hulu</button></a>
@@ -260,44 +269,37 @@ handleFormSubmit3 = event => {
 
     <SimButton value={result.id} name="id" onClick={this.handleBtnClick}>Find Similar Titles</SimButton>
   </ul>
-  <br/></Fade> 
+  <p></p></Fade> 
 </div>
 
 ))}
 </ResultList>
-<ResultList><Fade top> 
+<ResultList>
 
-              <div className="col-md">
+ 
                 {this.state.details.map(detail => (
 
-                  <div className="container">
-                       <table class="table">
+                  <div className="container"><Fade top> 
+                       <table className="table">
             <tbody>    <tr>
       <th scope="col">
-    {/* <img className="contain"  onError={(e)=>{e.target.onerror = null; e.target.src="images/logo2.png"}} src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2` + `${result.poster_path}`}/>  */}</th>
-                   
-                     
-Premiere Date: {detail.show.premiered} <br/>
- Status: {detail.show.status} 
- <th scope="col" > <p className="name">{detail.show.name}</p>
- {detail.show.summary}  </th>    </tr>
-   
+    <img className="contain" onError={(e)=>{e.target.onerror = null; e.target.src="images/logo-icon.png"}} src={detail.show.image}/> </th> 
+
+ <th scope="col" >
+ <p className="name">{detail.show.name}</p>
+ <p>{detail.show.summary}</p>
+ <p>Premiere Date: {detail.show.premiered}</p>
+ <p>Status: {detail.show.status}</p>
+</th>
+   </tr>
    </tbody>
-     </table><div>
- <br/>
- <br/>
- {/* {detail.map(detailNew => (
-  <div> 
- Audience Rating: {detailNew.rating.average}
- </div> 
-))} */}
-                    </div> 
- 
-                  
+     </table>
+
+                  </Fade>
                   </div>
                 ))}
 
-              </div></Fade> 
+           
             </ResultList>
           
 
@@ -305,17 +307,16 @@ Premiere Date: {detail.show.premiered} <br/>
        {this.state.today.map(result => (
 
 <div className="container"><Fade top> 
-  <ul className="list-group">
-     <table class="table">
+     <table className="table">
             <tbody>    <tr>
       <th scope="col">
       <img className="contain"  onError={(e)=>{e.target.onerror = null; e.target.src="images/logo-icon.png"}} src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2` + `${result.poster_path}`}/> </th>
     <th scope="col" > <p className="name">{result.name}</p>
  {result.overview} 
- <br/> <br/> 
-  <WatchButton/>
- <br/> <br/> 
- <i>Check Availability on:</i> <br/>
+<p></p>
+ <p> <WatchButton/><SimButton value={result.id} name="id" onClick={this.handleBtnClick}>Find Similar Titles</SimButton></p>
+  
+ <i>Check Availability on:</i> <p></p>
  <a href={process.env.REACT_APP_DB_URL_8 + result.name + ' site:netflix.com'} target="_blank"><button value={result.name} className='netflix'>Netflix</button></a>
  <a href={process.env.REACT_APP_DB_URL_8 + result.name + ' site:hulu.com'} target="_blank"><button value={result.name} className='hulu'>Hulu</button></a>
  <a href={process.env.REACT_APP_DB_URL_8 + result.name + ' site:amazon.com'} target="_blank"><button value={result.name} className='amazon'>Amazon</button></a>
@@ -324,10 +325,6 @@ Premiere Date: {detail.show.premiered} <br/>
 
    </tbody>
      </table>
-
-
-    <SimButton value={result.id} name="id" onClick={this.handleBtnClick}>Find Similar Titles</SimButton>
-  </ul>
   <br/></Fade> 
 </div>
 
@@ -335,28 +332,37 @@ Premiere Date: {detail.show.premiered} <br/>
 </ResultList>
 
 
- <Col size="md-4">
             <ResultList><Fade top> 
               <div className="col-md">
-                {this.state.simResults.map(result2 => (
+              {this.state.simResults.map(result => (
 
-                  <div className="container"
-                  
-                   >
-                    <ul className="list-group">
-                      <li>Name: {result2.name} key= {result2.id}</li>
-                      <li><img src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2` + `${result2.poster_path}`}  width='200' height='100'/> </li>
-                      <li> Key: {result2.id}</li>
-                      <li>overview: {result2.overview}</li>
+<div className="container"><Fade top> 
+     <table className="table">
+            <tbody>    <tr>
+      <th scope="col">
+      <img className="contain"  onError={(e)=>{e.target.onerror = null; e.target.src="images/logo-icon.png"}} src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2` + `${result.poster_path}`}/> </th>
+    <th scope="col" > <p className="name">{result.name}</p>
+ {result.overview} 
+ <p></p>
+ <p> <WatchButton/><SimButton value={result.id} name="id" onClick={this.handleBtnClick}>Find Similar Titles</SimButton></p>
+ 
+<p><i>Check Availability on:</i></p>
+ <a href={process.env.REACT_APP_DB_URL_8 + result.name + ' site:netflix.com'} target="_blank"><button value={result.name} className='netflix'>Netflix</button></a>
+ <a href={process.env.REACT_APP_DB_URL_8 + result.name + ' site:hulu.com'} target="_blank"><button value={result.name} className='hulu'>Hulu</button></a>
+ <a href={process.env.REACT_APP_DB_URL_8 + result.name + ' site:amazon.com'} target="_blank"><button value={result.name} className='amazon'>Amazon</button></a>
+ 
+ </th>    </tr>
 
-                    </ul>
-                  </div>
-                ))}
+   </tbody>
+     </table>
+  <p></p></Fade> 
+</div>
 
+))}
               </div></Fade>
             </ResultList>
 
-          </Col>
+     
       </Container>
     );
   }

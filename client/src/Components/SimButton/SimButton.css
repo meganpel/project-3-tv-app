@@ -1,9 +1,8 @@
-.btn-sm {
-    background-color: red;
-    /* font-family: Arial, Helvetica, sans-serif; */
+.similar {
+    background: rgb(240, 178, 7);
     font-weight: bold;
     border-color: transparent;
-    padding: 3px 13px;
+    padding: 3px 12px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -11,5 +10,4 @@
     font-size: 20px;
     cursor: pointer;
     color: #fff;
-    /* border-radius: 18px; */
 }
