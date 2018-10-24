@@ -11,11 +11,17 @@ class MyCal extends Component {
     }
 
 
-    pickerChange = date => this.setState({ pickerDate: date });
+    pickerChange = date => {
+    
+    this.setState({ pickerDate: date });
+    console.log(this.state.pickerDate)
+    }
 
     //  handleFormSubmit
 
-    //   handleInputChange
+    handleInputChange = input => {
+        this.setState({show: input})
+    }
 
     // // showAlert
     //   if new Date() =< 
@@ -23,13 +29,14 @@ class MyCal extends Component {
     render() {
         return (
             <div className="wrapper">
-                <div class="card">
+                <div className="card">
                 <h1> Set a Show Reminder</h1>
 
-                    <div class="card-body">
+                    <div className="card-body">
                     <h4> Today</h4>
                         <Calendar
                             value={this.state.calDate}
+                            // onChange={this.handleInputChange}
                         />
                     </div>
                 </div>
@@ -37,7 +44,7 @@ class MyCal extends Component {
                     <div className="form-group">
                         <label htmlFor="show">Show Name:</label>
                         <input
-                            onChange={this.handleInputChange}
+                             onChange={this.handleInputChange}
                             value={this.state.show}
                             name="show"
                             type="text"
@@ -56,18 +63,14 @@ class MyCal extends Component {
                         <br />
                         <label htmlFor="alert">Alerts:</label>
                             <select className="custom-select">
-                              <option selected>Set Alert</option>
+                              <option defaultValue>Set Alert</option>
                               <option value="1">One Day Before Show Airs</option>
                               <option value="2">Two Days Before Show Airs </option>
                               <option value="3">Seven Days Before Show Airs</option>
                             </select>
                             <br />
-                        <button
-                            onClick={this.handleFormSubmit}
-                            className="btn btn-info"
-                        >
-                            Save Reminder
-                        </button>
+                            <button onClick={this.onClick}/> Submit Date <button/>
+                        
                     </div>
                 </form>
             </div>
@@ -76,3 +79,12 @@ class MyCal extends Component {
 }
 
 export default MyCal;
+
+
+
+// {/* /* <button
+//                             onClick={this.handleFormSubmit}
+//                             className="btn btn-info"
+//                         >
+//                             Save Reminder
+//                         </button> */ */
