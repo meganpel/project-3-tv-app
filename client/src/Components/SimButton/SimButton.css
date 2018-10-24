@@ -1,0 +1,13 @@
+.similar {
+    background: rgb(240, 178, 7);
+    font-weight: bold;
+    border-color: transparent;
+    padding: 3px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #fff;
+}

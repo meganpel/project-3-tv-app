@@ -3,7 +3,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Switch, NavLink } from 'react-router-dom';
 
-import Login from "./Components/Login"
+import Login from "./components/Login"
 import Profile from "./pages/Profile";
 import TV from "./pages/TV";
 
@@ -96,7 +96,7 @@ class App extends Component {
             <nav className="navbar nav">
               <div className="container">
                 <div className="nav">
-                  <img src="logo.png" />
+                <img src="images/logo-icon-2.png" width="78" height="50"/>
                   <ul className="nav justify-content-end">
                     {this.renderUserEmail()}
                   </ul>

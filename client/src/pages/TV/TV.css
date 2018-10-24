@@ -1,0 +1,13 @@
+.btn-success, .btn-success:hover, .btn-success:active, .btn-success:visited{
+    background: rgb(7, 42, 240);
+    font-weight: bold;
+    border-color: transparent;
+    padding: 3px 12px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    margin: 4px 2px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #fff;
+}
