@@ -1,16 +1,13 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
-import { Link } from "react-router-dom";
-import ResultList from "../../Components/ResultList"
-import { Col, Row, Container } from "../../Components/Grid";
-import { List, ListItem } from "../../Components/List";
-import { Input, TextArea, Button } from "../../Components/Form";
-import SimButton from "../../Components/SimButton";
-import DetailsButton from "../../Components/DetailsButton";
-import WatchButton from "../../Components/WatchButton";
-import '../../Components/ResultList/ResultList.css';
+import ResultList from "../../components/ResultList"
+import { Container } from "../../components/Grid";
+import { Input,  Button } from "../../components/Form";
+import SimButton from "../../components/SimButton";
+import WatchButton from "../../components/WatchButton";
 import Fade from 'react-reveal/Fade';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import "./TV.css"
 
 class TV extends Component {
   state = {
@@ -245,31 +242,27 @@ handleFormSubmit3 = event => {
        {this.state.results.map(result => (
 
 <div className="container"><Fade top> 
-  <ul className="list-group">
+
      <table className="table">
             <tbody>    <tr>
       <th scope="col">
       <img className="contain"  onError={(e)=>{e.target.onerror = null; e.target.src="images/logo-icon.png"}} src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2` + `${result.poster_path}`}/> </th>
     <th scope="col" > <p className="name">{result.name}</p>
  {result.overview} 
-  <p></p>
-  <p><WatchButton/><WatchButton/></p> 
-<p> <i>Check Availability on:</i></p>
-
+ <p></p>
+ <p> <WatchButton/><SimButton value={result.id} name="id" onClick={this.handleBtnClick}>Find Similar Titles</SimButton></p>
+  
+ <i>Check Availability on:</i> <p></p>
  <a href={process.env.REACT_APP_DB_URL_8 + result.name + ' site:netflix.com'} target="_blank"><button value={result.name} className='netflix'>Netflix</button></a>
  <a href={process.env.REACT_APP_DB_URL_8 + result.name + ' site:hulu.com'} target="_blank"><button value={result.name} className='hulu'>Hulu</button></a>
  <a href={process.env.REACT_APP_DB_URL_8 + result.name + ' site:amazon.com'} target="_blank"><button value={result.name} className='amazon'>Amazon</button></a>
+ 
  </th>    </tr>
 
    </tbody>
      </table>
-
-
-
-
-    <SimButton value={result.id} name="id" onClick={this.handleBtnClick}>Find Similar Titles</SimButton>
-  </ul>
-  <p></p></Fade> 
+ <p></p>
+ </Fade> 
 </div>
 
 ))}
@@ -316,7 +309,7 @@ handleFormSubmit3 = event => {
 <p></p>
  <p> <WatchButton/><SimButton value={result.id} name="id" onClick={this.handleBtnClick}>Find Similar Titles</SimButton></p>
   
- <i>Check Availability on:</i> <p></p>
+ <p><i>Check Availability on:</i> </p>
  <a href={process.env.REACT_APP_DB_URL_8 + result.name + ' site:netflix.com'} target="_blank"><button value={result.name} className='netflix'>Netflix</button></a>
  <a href={process.env.REACT_APP_DB_URL_8 + result.name + ' site:hulu.com'} target="_blank"><button value={result.name} className='hulu'>Hulu</button></a>
  <a href={process.env.REACT_APP_DB_URL_8 + result.name + ' site:amazon.com'} target="_blank"><button value={result.name} className='amazon'>Amazon</button></a>
@@ -325,14 +318,15 @@ handleFormSubmit3 = event => {
 
    </tbody>
      </table>
-  <br/></Fade> 
+ <p></p>
+ </Fade> 
 </div>
 
 ))}
 </ResultList>
 
 
-            <ResultList><Fade top> 
+            <ResultList>
               <div className="col-md">
               {this.state.simResults.map(result => (
 
@@ -357,9 +351,8 @@ handleFormSubmit3 = event => {
      </table>
   <p></p></Fade> 
 </div>
-
-))}
-              </div></Fade>
+))} 
+              </div>
             </ResultList>
 
      

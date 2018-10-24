@@ -28,8 +28,6 @@ if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
 
-//mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/project3test");
-
 db.sequelize.sync({ force: false }).then(function() {
   app.listen(PORT, function() {
     console.log(`App listening on Port ${PORT}!`);

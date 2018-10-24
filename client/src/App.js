@@ -3,7 +3,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Switch, NavLink } from 'react-router-dom';
 
-import Login from "./Components/Login"
+import Login from "./components/Login"
 import Profile from "./pages/Profile";
 import TV from "./pages/TV";
 
