@@ -28,6 +28,7 @@ class TV extends Component {
   handleBtnClick = event => {
     const value = event.target.value;
     this.searchSimilar(value);
+    window.scrollTo(0, 0)
   }
 
   handleBtnClick2 = event => {
@@ -183,6 +184,7 @@ handleFormSubmit3 = event => {
       <Fade top> 
       <img src="images/logo-icon.png" width="274" height="177"/>
      <img src="images/observer.png"/>
+     <h4>Search, discover and plan your own programming schedule</h4>
 </Fade>
       </div>
       <div className="col-sm-4">
@@ -239,26 +241,28 @@ handleFormSubmit3 = event => {
             <p></p>
    
 <ResultList>
+
        {this.state.results.map(result => (
 
 <div className="container"><Fade top> 
-
      <table className="table">
-            <tbody>    <tr>
+            <tbody>
+              <tr>
       <th scope="col">
       <img className="contain"  onError={(e)=>{e.target.onerror = null; e.target.src="images/logo-icon.png"}} src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2` + `${result.poster_path}`}/> </th>
     <th scope="col" > <p className="name">{result.name}</p>
- {result.overview} 
- <p></p>
- <p> <WatchButton/><SimButton value={result.id} name="id" onClick={this.handleBtnClick}>Find Similar Titles</SimButton></p>
+
+<p> {result.overview} </p>
+ 
+ <p> <WatchButton/> <SimButton value={result.id} name="id" onClick={this.handleBtnClick}>Find Similar Titles</SimButton></p>
   
- <i>Check Availability on:</i> <p></p>
+  <p><i>Check Availability on:</i></p>
  <a href={process.env.REACT_APP_DB_URL_8 + result.name + ' site:netflix.com'} target="_blank"><button value={result.name} className='netflix'>Netflix</button></a>
  <a href={process.env.REACT_APP_DB_URL_8 + result.name + ' site:hulu.com'} target="_blank"><button value={result.name} className='hulu'>Hulu</button></a>
  <a href={process.env.REACT_APP_DB_URL_8 + result.name + ' site:amazon.com'} target="_blank"><button value={result.name} className='amazon'>Amazon</button></a>
  
- </th>    </tr>
-
+ </th>
+ </tr>
    </tbody>
      </table>
  <p></p>
@@ -274,7 +278,8 @@ handleFormSubmit3 = event => {
 
                   <div className="container"><Fade top> 
                        <table className="table">
-            <tbody>    <tr>
+            <tbody>
+              <tr>
       <th scope="col">
     <img className="contain" onError={(e)=>{e.target.onerror = null; e.target.src="images/logo-icon.png"}} src={detail.show.image}/> </th> 
 
@@ -301,12 +306,13 @@ handleFormSubmit3 = event => {
 
 <div className="container"><Fade top> 
      <table className="table">
-            <tbody>    <tr>
+            <tbody>
+              <tr>
       <th scope="col">
       <img className="contain"  onError={(e)=>{e.target.onerror = null; e.target.src="images/logo-icon.png"}} src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2` + `${result.poster_path}`}/> </th>
     <th scope="col" > <p className="name">{result.name}</p>
- {result.overview} 
-<p></p>
+<p> {result.overview}</p>
+
  <p> <WatchButton/><SimButton value={result.id} name="id" onClick={this.handleBtnClick}>Find Similar Titles</SimButton></p>
   
  <p><i>Check Availability on:</i> </p>
@@ -314,8 +320,8 @@ handleFormSubmit3 = event => {
  <a href={process.env.REACT_APP_DB_URL_8 + result.name + ' site:hulu.com'} target="_blank"><button value={result.name} className='hulu'>Hulu</button></a>
  <a href={process.env.REACT_APP_DB_URL_8 + result.name + ' site:amazon.com'} target="_blank"><button value={result.name} className='amazon'>Amazon</button></a>
  
- </th>    </tr>
-
+ </th>
+ </tr>
    </tbody>
      </table>
  <p></p>
@@ -332,12 +338,14 @@ handleFormSubmit3 = event => {
 
 <div className="container"><Fade top> 
      <table className="table">
-            <tbody>    <tr>
+            <tbody>
+              <tr>
       <th scope="col">
       <img className="contain"  onError={(e)=>{e.target.onerror = null; e.target.src="images/logo-icon.png"}} src={`https://image.tmdb.org/t/p/w600_and_h900_bestv2` + `${result.poster_path}`}/> </th>
     <th scope="col" > <p className="name">{result.name}</p>
- {result.overview} 
- <p></p>
+
+ <p>{result.overview}</p>
+ 
  <p> <WatchButton/><SimButton value={result.id} name="id" onClick={this.handleBtnClick}>Find Similar Titles</SimButton></p>
  
 <p><i>Check Availability on:</i></p>
@@ -345,8 +353,8 @@ handleFormSubmit3 = event => {
  <a href={process.env.REACT_APP_DB_URL_8 + result.name + ' site:hulu.com'} target="_blank"><button value={result.name} className='hulu'>Hulu</button></a>
  <a href={process.env.REACT_APP_DB_URL_8 + result.name + ' site:amazon.com'} target="_blank"><button value={result.name} className='amazon'>Amazon</button></a>
  
- </th>    </tr>
-
+ </th>
+ </tr>
    </tbody>
      </table>
   <p></p></Fade> 
