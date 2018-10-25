@@ -2,6 +2,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 var expressSession = require("express-session");
 const db = require("./models");
+var path = require("path");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -30,7 +31,7 @@ require("./routes/ApiRoutes")(app);
 require("./routes/WatchlistRoutes")(app);
 
 app.get('/profile', function (request, response){
-    response.sendFile(path.resolve(__dirname, 'public', 'index.html'))
+    response.sendFile(path.resolve(__dirname, 'client/public', 'index.html'))
 })
 
 if (process.env.NODE_ENV === "production") {
