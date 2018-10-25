@@ -71,3 +71,10 @@ table{
     cursor: pointer;
     color: #fff;
 }
+
+@media screen and (max-width: 600px) {
+    
+    th { display:table-row; text-align:center; }
+       
+        
+}
