@@ -8,7 +8,7 @@ TV ObServer was designed for those who:
 3. receive alerts on shows they are interested in
 
 ### View app on Heroku
-heroku url goes here
+https://tv-observer.herokuapp.com
 
 ### To start the API
 - From the root directory install the yarn dependencies: `yarn`
