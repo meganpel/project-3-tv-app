@@ -13,7 +13,7 @@ class Login extends Component {
   };
 
   pressLogin() {
-    fetch("http://localhost:3001/login", {
+    fetch(process.env.REACT_APP_NODE_URL + "login", {
       method: 'POST',
       headers: new Headers({'Content-Type': 'application/json'}),
       credentials: 'include',
@@ -32,7 +32,7 @@ class Login extends Component {
   }
 
   pressSignUp() {
-    fetch("http://localhost:3001/signup", {
+    fetch(process.env.REACT_APP_NODE_URL + "signup", {
       method: 'POST',
       headers: new Headers({'Content-Type': 'application/json'}),
       credentials: 'include',

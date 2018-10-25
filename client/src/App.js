@@ -15,7 +15,7 @@ class App extends Component {
   };
 
   componentDidMount() {
-    fetch("http://localhost:3001/status", {
+    fetch(process.env.REACT_APP_NODE_URL + "status", {
       method: 'POST',
       headers: new Headers({'Content-Type': 'application/json'}),
       credentials: 'include'
@@ -37,7 +37,7 @@ class App extends Component {
   }
 
   pressLogout() {
-    fetch("http://localhost:3001/logout", {
+    fetch(process.env.REACT_APP_NODE_URL + "logout", {
       method: 'POST',
       headers: new Headers({'Content-Type': 'application/json'}),
       credentials: 'include'
