@@ -11,3 +11,7 @@
     cursor: pointer;
     color: #fff;
 }
+
+.remove-watch {
+    background: darkred;
+}

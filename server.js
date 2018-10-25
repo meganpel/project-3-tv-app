@@ -21,8 +21,9 @@ app.use(function (req, res, next) {
   next();
 });
 
-
+require("./routes/SearchRoutes")(app);
 require("./routes/ApiRoutes")(app);
+require("./routes/WatchlistRoutes")(app);
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
