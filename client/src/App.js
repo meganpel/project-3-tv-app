@@ -20,7 +20,7 @@ class App extends Component {
       headers: new Headers({'Content-Type': 'application/json'}),
       credentials: 'include'
     })
-      .then(res => res.json())
+      // .then(res => res.json())
       .then(result => {
         if (result.success) {
           this.setState({loggedIn: true, userEmail: result.email});

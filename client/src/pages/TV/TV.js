@@ -8,6 +8,8 @@ import WatchButton from "../../Components/WatchButton";
 import Fade from "react-reveal/Fade";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "./TV.css";
+import * as Scroll from 'react-scroll';
+import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 const APP_URL = process.env.REACT_APP_NODE_URL;
 
@@ -21,7 +23,7 @@ class TV extends Component {
   handleBtnClick = event => {
     const value = event.target.value;
     this.searchSimilar(value);
-    window.scrollTo(0, 0);
+    scroll.scrollToTop();
   };
 
   handleInputChange = event => {
