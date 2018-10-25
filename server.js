@@ -29,6 +29,10 @@ require("./routes/SearchRoutes")(app);
 require("./routes/ApiRoutes")(app);
 require("./routes/WatchlistRoutes")(app);
 
+app.get('/profile', function (request, response){
+    response.sendFile(path.resolve(__dirname, 'public', 'index.html'))
+})
+
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
 }
