@@ -20,5 +20,19 @@ heroku url goes here
 - Install the yarn dependencies: `yarn`
 - To start the React App: `yarn start`
 
+### Resources Used 
+* [NodeJS](https://nodejs.org/en/)
+* [ReactJS](https://reactjs.org/)
+* [ExpressJS](https://expressjs.com/)
+* [Bootstrap](https://getbootstrap.com/)
+* [Google Fonts](https://fonts.google.com/specimen/IBM+Plex+Sans)
+* [React Tabs](https://github.com/reactjs/react-tabs)
+* [Galderglynn Font](https://www.1001fonts.com/galderglynn-titling-font.html)
+* [React Reveal](https://github.com/rnosov/react-reveal)
+* [Cloud Icon](https://www.iconfinder.com/icons/183554/cloud_icon)
+* [TVmaze API](https://www.tvmaze.com/api)
+* [TMDB - The Movie Database API](https://developers.themoviedb.org/3)
+* [React Scroll](https://github.com/fisshy/react-scroll)
+
 ### Authors
 Danielle LaMorte, Justin Verterano, Megan Pellegrino-Zubricky
