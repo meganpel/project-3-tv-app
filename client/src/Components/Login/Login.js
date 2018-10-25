@@ -62,7 +62,7 @@ class Login extends Component {
 
           <div className="tab-content">
             <div className={!this.state.showSignUp ? "hide-side": ""}>
-              <h1>Sign Up for Free</h1>
+              <h1 className="login-title">Sign Up for Free</h1>
               <div className="field-wrap">
                 <input type="email" placeholder="Email" value={this.state.signUpEmail} onChange={(e) => this.setState({signUpEmail: e.target.value})} />
               </div>
@@ -77,7 +77,7 @@ class Login extends Component {
             </div>
 
             <div className={this.state.showSignUp ? "hide-side": ""}>
-              <h1>Welcome Back!</h1>
+              <h1 className="login-title">Welcome Back!</h1>
               <div className="field-wrap">
                 <input type="email" placeholder="Email" value={this.state.loginEmail} onChange={(e) => this.setState({loginEmail: e.target.value})} />
               </div>

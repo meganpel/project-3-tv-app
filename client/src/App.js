@@ -3,7 +3,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Switch, NavLink } from 'react-router-dom';
 
-import Login from "./components/Login"
+import Login from "./Components/Login"
 import Profile from "./pages/Profile";
 import TV from "./pages/TV";
 
@@ -110,8 +110,8 @@ class App extends Component {
                 </ul>
               </div>
             </nav>
-             <Route exact path="/" component={TV} />
-             <Route exact path="/profile" component={Profile} />
+             <PropsRoute exact path="/" component={TV} loggedIn={this.state.loggedIn} />
+             <PropsRoute exact path="/profile" component={Profile} loggedIn={this.state.loggedIn} />
              <Login
               showLoginModal={this.state.showLoginModal}
               hideLoginModal={this.hideLoginModal.bind(this)}
@@ -124,5 +124,21 @@ class App extends Component {
     );
   }
 }
+
+// https://github.com/ReactTraining/react-router/issues/4105#issuecomment-289195202
+const renderMergedProps = (component, ...rest) => {
+  const finalProps = Object.assign({}, ...rest);
+  return (
+    React.createElement(component, finalProps)
+  );
+};
+
+const PropsRoute = ({ component, ...rest }) => {
+  return (
+    <Route {...rest} render={routeProps => {
+      return renderMergedProps(component, routeProps, rest);
+    }}/>
+  );
+};
 
 export default App;
