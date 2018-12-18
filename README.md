@@ -9,4 +9,4 @@
  - Go to the client directory
  - Install the yarn dependencies: `yarn`
  - To start the React App: `yarn start`
- 
+ # react-tv-app
